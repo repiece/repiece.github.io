@@ -1,0 +1,146 @@
+/* ===== Reset (최소) ===== */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #111;
+    color: #fff;
+}
+
+.top-bar {
+    height: 56px;
+    background: #3b3b3b;
+    border-bottom: 1px solid #1f1f1f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+/* 메뉴 정렬 */
+.plugin {
+    display: flex;
+    gap: 28px;
+}
+
+/* 버튼 → 텍스트처럼 */
+.plugin button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #a1a1a1;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+}
+
+/* 호버 */
+.plugin button:hover {
+    color: #ffffff;
+}
+
+/* 선택 상태 */
+.plugin button.active {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* ===== Language Select ===== */
+.language-select select {
+    background: #3a3a3a;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.language-select select:focus {
+    outline: none;
+}
+
+/* ===== Content ===== */
+main {
+    padding: 30px 24px;
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.content-section h2 {
+    font-size: 40px;
+    margin: 0;
+    text-align: center;
+}
+/* 세부정보*/
+
+.sub-nav {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 25px 0 40px;
+}
+
+.sub-nav button {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 19px;
+    cursor: pointer;
+
+    height: 28px;              /* 🔥 핵심 */
+    display: flex;             /* 🔥 핵심 */
+    align-items: center;       /* 🔥 핵심 */
+    padding: 0px;                /* 패딩 제거 */
+}
+
+.sub-nav button:hover {
+    color: #fff;
+}
+
+.sub-nav button.active {
+    color: #fff;
+}
+
+
+.sub-section.active {
+    display: block;
+}
+
+
+.sub-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.sub-section {
+    display: none;
+    max-width: 960px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #d0d0d0;
+    white-space: pre-line; /* JS 템플릿 리터럴 줄바꿈 유지 */
+    text-align: center; /* 👈 이거 */
+    padding: 0px; 
+    margin: 0 auto;
+    
+}
+
+.sub-section[data-sub="params"] {
+    text-align: left;
+}
+
+.sub-section .param-note {
+    display: block;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

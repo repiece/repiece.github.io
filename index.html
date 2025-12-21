@@ -4,71 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RePiece</title>
-    <style>
-        /* 기본 스타일 */
-        body {
-            margin: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        /* 컨텐츠 영역 */
-        .container {
-            text-align: center;
-            background: rgba(0,0,0,0.4);
-            padding: 60px 80px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .container h1 {
-            font-size: 64px;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        #content {
-            font-size: 28px;
-            margin-top: 20px;
-        }
-
-        /* 언어 선택 메뉴 */
-        .language-select {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .language-select select {
-            padding: 5px 10px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: none;
-            background-color: rgba(255,255,255,0.9);
-            color: #333;
-            cursor: pointer;
-        }
-
-        .language-select select:focus {
-            outline: none;
-        }
-
-        /* 상업적 느낌을 위한 버튼 호버 */
-        .language-select select:hover {
-            background-color: #fff;
-            transform: scale(1.05);
-            transition: 0.2s;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <!-- 언어 선택 -->
+
+<header class="top-bar">
+    <nav class="plugin">
+        <button data-target="smart-stroke" class="active">Smart Stroke</button>
+        <button data-target="path-repeater">Path Repeater</button>
+    </nav>
+
     <div class="language-select">
         <select id="language">
             <option value="ko">한국어</option>
@@ -76,27 +21,43 @@
             <option value="en">English</option>
         </select>
     </div>
+</header>
 
-    <!-- 메인 컨텐츠 -->
-    <div class="container">
-        <h1>RePiece</h1>
-        <div id="content">다국어테스트</div>
-    </div>
+<main>
+<nav class="sub-nav">
+    <button data-sub="quick"></button>
+    <button data-sub="params"></button>
+    <button data-sub="faq"></button>
+</nav>
 
-    <script>
-        const content = document.getElementById('content');
-        const languageSelect = document.getElementById('language');
 
-        const texts = {
-            ko: "다국어테스트",
-            ja: "多言語テスト",
-            en: "Multilingual Test"
-        };
 
-        languageSelect.addEventListener('change', () => {
-            const selectedLang = languageSelect.value;
-            content.textContent = texts[selectedLang];
-        });
-    </script>
+    <!-- 🔹 Smart Stroke -->
+    <section id="smart-stroke"  class="content-section active">
+        <h2>Smart Stroke</h2>
+
+    <div class="sub-content">
+    <div class="sub-section active" data-sub="quick" data-i18n="smart-stroke.quick"></div>
+    <div class="sub-section" data-sub="params" data-i18n="smart-stroke.params"></div>
+    <div class="sub-section" data-sub="faq" data-i18n="smart-stroke.faq"></div>
+
+    </section>
+
+    <!-- 🔹 Path Repeater -->
+    <section id="path-repeater" class="content-section">
+        <h2>Path Repeater</h2>
+    <div class="sub-content">
+    <div class="sub-section active" data-sub="quick" data-i18n="path-repeater.quick"></div>
+    <div class="sub-section" data-sub="params" data-i18n="path-repeater.params"></div>
+    <div class="sub-section" data-sub="faq" data-i18n="path-repeater.faq"></div>
+  <div class="sub-content">
+    </section>
+
+
+
+</main>
+
+<!-- ✅ body 맨 아래 -->
+<script src="./js/main.js"></script>
 </body>
 </html>
