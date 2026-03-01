@@ -648,9 +648,280 @@ set Blur Strength to 0.
     }
 };
 
+
+
+
+const boundaryFillLog = {
+    ko: {
+        quick: `텍스트의 형태를 분석하여, 모양 레이어로 변환하는 과정 없이도 텍스트를 따라가는 텍스처를 적용할 수 있는 효과입니다.
+공식적으로 After Effects에서는 글자의 위치나 크기 등의 정보를 직접 가져오는 방법이 없지만, 다양한 알고리즘을 통해 높은 정확도의 추적을 구현했습니다.
+또한 비파괴 방식으로 텍스트 레이어의 형태를 그대로 유지하므로, 텍스트 레이어 고유의 기능인 텍스트 애니메이터와도 완벽하게 호환됩니다.
+**텍스처가 텍스트를 따라가도록 장인정신을 발휘할 필요는 없습니다. 클릭 한 번이면, 마법처럼 완성됩니다.**
+[[video:assets/boundary fill/videos/예시1]]
+위 애니메이션의 제작 과정을 상상해보세요. **Boundary Fill**이라면 모양 레이어 하나, 텍스트 레이어 하나. 그게 전부입니다.
+[[video:assets/boundary fill/videos/예시2]]
+텍스처에 제한은 없습니다. 이미지든, 그림이든, 무엇이든 원하는 대로 적용할 수 있습니다.
+[[video:assets/boundary fill/videos/예시3]]
+크기, 회전, 불투명도를 추적하며 100가지 이상의 다양한 파라미터를 통해 창의적인 연출을 시도해보세요
+[[video:assets/boundary fill/videos/시연]]
+사용 방법은 놀라울 만큼 간단합니다. 텍스트 레이어에 효과를 적용하고 TextSave를 클릭한 뒤, 원하는 텍스처를 선택하세요.
+위치가 마음에 들지 않는다면? 컴포지션에서 바로 드래그하세요. 회전과 크기 조정도 직관적으로 제어할 수 있습니다.
+이 부분은 텍스처를 따라가지 않게 하고 싶으신가요? 우클릭 한 번이면 충분합니다.
+`,
+        params: commonParamsText.ko + `
+        v 3.0.0 에 대한 설명입니다.
+<topic open "Text Save">
+**Text Save는 after effects의 한계를 최대한 우회하기 위해 설계된 기능입니다.**
+모든 값은 세이브 버튼을 누르는 순간에만 반영됩니다.
+X Merge는 텍스트의 외곽선을 기준으로 X 값만큼 수평 방향으로 확장하여, 이를 하나의 경계로 인식할지 결정하는 설정입니다.
+Y Merge는 동일한 방식으로 수직 방향에 적용되는 설정입니다.
+X Snap, Y Snap는 Merge가 적용된 경계의 위치값을 보정하여 한 줄로 깔끔하게 배치하는 기능입니다.
+[[video:assets/boundary fill/videos/TextSave]]
+문자 단위로 경계를 지정하고 싶으신가요? 문자 사이 간격이 좁다면 자간을 먼저 늘린 뒤 Save를 누르고, 다시 자간을 줄이는 방법도 있습니다.
+*(앞서 말해듯이 after effects의 기술적인 한계를 최대한 우회하는 방식으로 작동하기때문에 약간의 조작이 필요합니다.)*
+Equal Spacing은 각 경계의 간격을 보정해줍니다 그리드 느낌의 텍스트일 경우 snap과 같이 사용하면 깔끔한 그리드를 만들 수 있습니다.
+[[video:assets/boundary fill/videos/Equal Spacing]]
+**V** Move & Scale
+좌클릭 : 이동
+좌클릭 + Shift : 스냅 이동
+좌클릭 + Control : 크기 조절
+우클릭 : 숨기기
+**R** Rotation
+좌클릭 : 회전
+**T** Time
+좌클릭 : 타임 딜레이 수치 조절
+*0~1 범위 Time Sampling의 Delay Time(s)값에 곱해지는 수치입니다.*
+</topic>
+<topic "Snap">
+snap 수치사이의 경계를 정렬시킵니다. 애니메이션이 적용된후에 깔끔한 정렬이 필요한 특수한 경우 사용하세요.
+</topic>
+<topic "Texture">
+**Mode** 텍스쳐의 개수를 지정합니다.
+**Texture** 텍스쳐를 지정합니다.
+**Texture Solo** 텍스쳐만 보이게합니다.
+**Blending Mode** 텍스트보다 **뒤에 있는**(Order와 연관되어있습니다.) 텍스쳐에 대한 Blending Mode입니다.
+**Sub Texture** 텍스쳐를 복제합니다. **Radnom** 옵션과 같이 사용할 수 있습니다.
+</topic>
+<topic "Time Sampling">
+텍스쳐에 대한 타임 샘플링입니다.
+**Snap to Frames**는 텍스쳐의 시간 샘플링을 프레임 단위로 맞춰주는 옵션입니다. 성능 최적화와도 관련이 있습니다.
+</topic>
+**Texture Transform** 텍스쳐에 대한 변형입니다.
+<topic "Layer Transform">
+레이어에 대한 변형입니다.
+정밀한 3D 트래킹을 지원하기 위해 본 효과는 자체 3D 공간을 제공합니다. Controller를 3D Null 레이어로 설정하면, 공간 내에서 보다 직관적으로 이동 및 제어가 가능합니다.
+*After Effects 텍스트 레이어의 구조적 특성으로 인해, 레이어 자체에서 완전한 3D를 지원하는 것은 기술적으로 여러가지 문제가 있어 우회하는 방식으로 개발되었습니다.*
+</topic>
+<topic "Dynamic">
+텍스트의 모양을 분석하여 작동합니다.
+**Size Mode** 각각의 Size 축을 의미 합니다.
+**Original Size** 기준이 되는 Size 입니다.
+**Scale By Save Ratio** 저장된 시점의 텍스트 크기와 현재 크기를 비교하여 Scale를 결정합니다.
+**Rotation** 세이브된 시점의 회전 각도를 0으로 설정하여 회전을 추적합니다.
+**Opacity** 픽셀을 추적하여 불투명도 값에 맞게 텍스쳐의 불투명도를 조절합니다.
+**Opacity** 픽셀 추적 알고리즘입니다.
+Representative 대표값을 추적하여 불투명도를 결정합니다. 텍스트끼리 애니메이션중에 겹치는 경우에도 정확도를 높게 유지할 수 있습니다.
+Max 최고값을 추적합니다. 텍스트가 겹치는 경우에는 정확도가 떨어질 수 있습니다. *속도는 빠릅니다.*
+너무 얇은 1 픽셀의 선을 가진 텍스트라면 Max로 설정하는걸 추천드립니다.
+</topic>
+**Color** 텍스쳐에 대한 컬러 옵션입니다.
+**Random** 텍스쳐에 대한 랜덤 옵션입니다.
+<topic "Order">
+텍스쳐를 그리는 순서를 결정합니다.
+**In front** 텍스트보다 텍스쳐가 앞에 그려집니다.
+**Behind** 텍스트보다 텍스쳐가 뒤에 그려집니다.
+**Random** **in front Random** 수치에 따라 순서가 결정됩니다.
+**Depth** 텍스쳐의 Z값에 따라 순서가 결정됩니다. **Camera** 를 **AE Camera**로 설정하고 z값의 차이가 있어야합니다.
+</topic>
+`
+
+,
+        faq: `${updateText.ko}`
+    },
+    ja: {
+        quick: `テキストの形状を解析し、シェイプレイヤーへ変換することなく、テキストに追従するテクスチャを適用できるエフェクトです。
+公式にはAfter Effectsでは文字の位置やサイズなどの情報を直接取得する方法はありませんが、独自のアルゴリズムにより高精度なトラッキングを実現しました。
+さらに非破壊方式でテキストレイヤーの形状をそのまま保持するため、テキストレイヤー固有の機能であるテキストアニメーターとも完全に互換性があります。
+**テクスチャをテキストに追従させるために職人技を発揮する必要はありません。ワンクリックで、魔法のように完成します。**
+[[video:assets/boundary fill/videos/예시1]]
+上記のアニメーションの制作工程を想像してみてください。**Boundary Fill**なら、シェイプレイヤー1つ、テキストレイヤー1つ。それだけです。
+[[video:assets/boundary fill/videos/예시2]]
+テクスチャに制限はありません。画像でも、イラストでも、あらゆる素材を自由に適用できます。
+[[video:assets/boundary fill/videos/예시3]]
+サイズ、回転、不透明度をトラッキングし、100種類以上の多彩なパラメータで創造的な演出をお試しください。
+[[video:assets/boundary fill/videos/시연]]
+使い方は驚くほど簡単です。テキストレイヤーにエフェクトを適用し、TextSaveをクリックしてから、適用したいテクスチャを選択してください。
+位置が気に入らない場合は？コンポジション上で直接ドラッグしてください。回転やサイズ調整も直感的にコントロールできます。
+この部分だけテクスチャを追従させたくないですか？右クリック一回で完了です。
+`,
+        params: commonParamsText.ja + `
+         v 3.0.0 に関する説明です。
+<topic open "Text Save">
+**Text SaveはAfter Effectsの制限を最大限に回避するために設計された機能です。**
+すべての値はSaveボタンを押した瞬間にのみ反映されます。
+X Mergeはテキストのアウトラインを基準に、X値分だけ水平方向へ拡張し、それを1つの境界として認識するかを決定する設定です。
+Y Mergeは同様の仕組みを垂直方向に適用する設定です。
+X Snap、Y SnapはMergeが適用された境界の位置を補正し、1列にきれいに整列させる機能です。
+[[video:assets/boundary fill/videos/TextSave]]
+文字単位で境界を指定したいですか？文字間隔が狭い場合は、先にトラッキング（字間）を広げてからSaveを押し、その後元に戻す方法もあります。
+*(前述の通り、After Effectsの技術的な制限を最大限回避する方式で動作しているため、多少の調整が必要です。)*
+Equal Spacingは各境界の間隔を補正します。グリッド風のテキストの場合、Snapと併用すると整ったグリッドを作ることができます。
+[[video:assets/boundary fill/videos/Equal Spacing]]
+**V** Move & Scale
+左クリック : 移動
+左クリック + Shift : スナップ移動
+左クリック + Control : サイズ調整
+右クリック : 非表示
+**R** Rotation
+左クリック : 回転
+**T** Time
+左クリック : タイムディレイ値の調整
+*0〜1の範囲で、Time SamplingのDelay Time(s)値に乗算される数値です。*
+</topic>
+<topic "Snap">
+snap値間の境界を整列させます。アニメーション適用後にきれいな整列が必要な特殊なケースで使用してください。
+</topic>
+<topic "Texture">
+**Mode** テクスチャの数を指定します。
+**Texture** テクスチャを指定します。
+**Texture Solo** テクスチャのみを表示します。
+**Blending Mode** テキストより**後ろにある**（Orderと関連しています）テクスチャに対するブレンドモードです。
+**Sub Texture** テクスチャを複製します。**Random**オプションと併用可能です。
+</topic>
+<topic "Time Sampling">
+テクスチャに対するタイムサンプリングです。
+**Snap to Frames**はテクスチャの時間サンプリングをフレーム単位に合わせるオプションです。パフォーマンス最適化にも関係します。
+</topic>
+**Texture Transform** テクスチャに対する変形です。
+<topic "Layer Transform">
+レイヤーに対する変形です。
+正確な3Dトラッキングをサポートするため、本エフェクトは独自の3D空間を提供します。Controllerを3D Nullレイヤーに設定すると、空間内でより直感的に移動および制御が可能です。
+*After Effectsのテキストレイヤーの構造的特性により、レイヤー自体で完全な3Dをサポートすることは技術的に複数の問題があり、回避方式で開発されています。*
+</topic>
+<topic "Dynamic">
+テキストの形状を解析して動作します。
+**Size Mode** 各Size軸を意味します。
+**Original Size** 基準となるSizeです。
+**Scale By Save Ratio** 保存時点のテキストサイズと現在のサイズを比較してScaleを決定します。
+**Rotation** 保存時点の回転角度を0に設定し、回転をトラッキングします。
+**Opacity** ピクセルをトラッキングし、不透明度値に応じてテクスチャの不透明度を調整します。
+**Opacity** ピクセルトラッキングアルゴリズムです。
+Representative 代表値をトラッキングして不透明度を決定します。テキスト同士がアニメーション中に重なった場合でも高い精度を維持できます。
+Max 最大値をトラッキングします。テキストが重なった場合は精度が低下する可能性があります。*速度は高速です。*
+非常に細い1ピクセル線のテキストの場合はMax設定を推奨します。
+</topic>
+**Color** テクスチャに対するカラーオプションです。
+**Random** テクスチャに対するランダムオプションです。
+<topic "Order">
+テクスチャの描画順を決定します。
+**In front** テキストより前にテクスチャが描画されます。
+**Behind** テキストより後ろにテクスチャが描画されます。
+**Random** **in front Random**値に応じて順序が決定されます。
+**Depth** テクスチャのZ値に応じて順序が決定されます。**Camera**を**AE Camera**に設定し、Z値に差がある必要があります。
+</topic>
+`
+,
+        faq: `${updateText.ja}`
+    },
+
+    en: {
+        quick: `This effect analyzes the shape of text and allows you to apply textures that follow the text—without converting it into shape layers.
+Officially, After Effects does not provide a way to directly access character position or size data. However, through various custom algorithms, we have achieved highly accurate tracking.
+Because it works in a non-destructive way and preserves the original text layer, it remains fully compatible with native Text Animators.
+**There is no need for craftsmanship to make textures follow text. One click, and it works like magic.**
+[[video:assets/boundary fill/videos/예시1]]
+Imagine the production process behind the animation above. With **Boundary Fill**, all you need is one shape layer and one text layer. That’s it.
+[[video:assets/boundary fill/videos/예시2]]
+There are no limits to textures. Images, illustrations—apply anything you want.
+[[video:assets/boundary fill/videos/예시3]]
+Track size, rotation, and opacity, and explore creative possibilities with over 100 adjustable parameters.
+[[video:assets/boundary fill/videos/시연]]
+Using it is surprisingly simple. Apply the effect to a text layer, click TextSave, then select the texture you want.
+Not happy with the position? Just drag it directly in the composition. Rotation and scale can also be adjusted intuitively.
+Want a specific area not to follow the texture? A single right-click is enough.
+`,
+        params: commonParamsText.en + `
+Description for v 3.0.0.
+<topic open "Text Save">
+**Text Save is designed to bypass the limitations of After Effects as much as possible.**
+All values are applied only at the moment the Save button is pressed.
+X Merge expands horizontally by the specified X value based on the text outline and determines whether it should be recognized as a single boundary.
+Y Merge applies the same logic vertically.
+X Snap and Y Snap adjust the positions of merged boundaries so they align cleanly in a single row.
+[[video:assets/boundary fill/videos/TextSave]]
+Want to define boundaries per character? If the spacing between characters is too narrow, increase the tracking first, press Save, and then reduce the tracking again.
+*(As mentioned earlier, because this works by bypassing technical limitations in After Effects, some manual adjustment may be required.)*
+Equal Spacing corrects the spacing between boundaries. For grid-style text, using it together with Snap helps create a clean grid layout.
+[[video:assets/boundary fill/videos/Equal Spacing]]
+**V** Move & Scale
+Left Click : Move
+Left Click + Shift : Snap Move
+Left Click + Control : Scale
+Right Click : Hide
+**R** Rotation
+Left Click : Rotate
+**T** Time
+Left Click : Adjust Time Delay value
+*This value (0–1 range) is multiplied by the Delay Time(s) in Time Sampling.*
+</topic>
+<topic "Snap">
+Aligns boundaries between snap values. Use this in special cases where clean alignment is required after animation is applied.
+</topic>
+<topic "Texture">
+**Mode** Specifies the number of textures.
+**Texture** Selects the texture.
+**Texture Solo** Displays only the texture.
+**Blending Mode** The blending mode for textures positioned **behind** the text (related to Order).
+**Sub Texture** Duplicates the texture. Can be used together with the **Random** option.
+</topic>
+<topic "Time Sampling">
+Time sampling settings for the texture.
+**Snap to Frames** Aligns texture time sampling to frame units. This is also related to performance optimization.
+</topic>
+**Texture Transform** Transformation settings for the texture.
+<topic "Layer Transform">
+Transformation settings for the layer.
+To support precise 3D tracking, this effect provides its own 3D space. By setting the Controller to a 3D Null layer, you can intuitively move and control it within 3D space.
+*Due to the structural characteristics of After Effects text layers, fully supporting native layer-level 3D presented multiple technical challenges, so this feature was implemented using a workaround approach.*
+</topic>
+<topic "Dynamic">
+Operates by analyzing the shape of the text.
+**Size Mode** Refers to each individual Size axis.
+**Original Size** The reference size.
+**Scale By Save Ratio** Determines scale by comparing the text size at the time of Save with the current size.
+**Rotation** Sets the saved rotation value to 0 as a baseline and tracks rotation changes.
+**Opacity** Tracks pixel data and adjusts the texture’s opacity accordingly.
+**Opacity** Pixel tracking algorithm.
+Representative Tracks a representative value to determine opacity. Maintains high accuracy even when text overlaps during animation.
+Max Tracks the maximum value. Accuracy may decrease when text overlaps. *Faster performance.*
+For extremely thin 1-pixel stroke text, Max mode is recommended.
+</topic>
+**Color** Color options for the texture.
+**Random** Randomization options for the texture.
+<topic "Order">
+Determines the rendering order of textures.
+**In front** Texture is drawn in front of the text.
+**Behind** Texture is drawn behind the text.
+**Random** Order is determined based on the **in front Random** value.
+**Depth** Order is determined by the texture’s Z value. **Camera** must be set to **AE Camera**, and there must be differences in Z values.
+</topic>
+`,
+        faq: `${updateText.en}`
+    }
+};
+
+
+
+
+
+
+
+
+
 const pluginLogs = {
     "smart-stroke": smartStrokeLog,
-    "path-repeater": pathRepeaterLog
+    "path-repeater": pathRepeaterLog,
+    "boundary-fill": boundaryFillLog
 };
 
 let toggleGroupCounter = 0;
