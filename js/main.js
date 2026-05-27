@@ -671,14 +671,14 @@ const boundaryFillLog = {
         params: commonParamsText.ko + `
         v 3.0.0 에 대한 설명입니다.
 <topic open "Text Save">
-**Text Save는 after effects의 한계를 최대한 우회하기 위해 설계된 기능입니다.**
+**Text Save는 After Effects의 한계를 최대한 우회하기 위해 설계된 기능입니다.**
 모든 값은 세이브 버튼을 누르는 순간에만 반영됩니다.
 X Merge는 텍스트의 외곽선을 기준으로 X 값만큼 수평 방향으로 확장하여, 이를 하나의 경계로 인식할지 결정하는 설정입니다.
 Y Merge는 동일한 방식으로 수직 방향에 적용되는 설정입니다.
 X Snap, Y Snap는 Merge가 적용된 경계의 위치값을 보정하여 한 줄로 깔끔하게 배치하는 기능입니다.
 [[video:assets/boundary fill/videos/TextSave]]
 문자 단위로 경계를 지정하고 싶으신가요? 문자 사이 간격이 좁다면 자간을 먼저 늘린 뒤 Save를 누르고, 다시 자간을 줄이는 방법도 있습니다.
-*(앞서 말해듯이 after effects의 기술적인 한계를 최대한 우회하는 방식으로 작동하기때문에 약간의 조작이 필요합니다.)*
+*(앞서 말해듯이 After Effects의 기술적인 한계를 최대한 우회하는 방식으로 작동하기때문에 약간의 조작이 필요합니다.)*
 Equal Spacing은 각 경계의 간격을 보정해줍니다 그리드 느낌의 텍스트일 경우 snap과 같이 사용하면 깔끔한 그리드를 만들 수 있습니다.
 [[video:assets/boundary fill/videos/Equal Spacing]]
 **V** Move & Scale
@@ -911,6 +911,192 @@ Determines the rendering order of textures.
 };
 
 
+const textOneLog = {
+    ko: {
+        quick: `텍스트 레이어를 위한 새로운 **텍스트 렌더러 효과**입니다.
+After Effects의 기존 텍스트 레이어가 가진 최소 단위인 ‘문자(Character)’보다 더 세밀한 글리프(Glyph) 단위로 텍스트를 분석하고 렌더링합니다.
+또한 자체적인 텍스트 애니메이터와 ID 기반 변형 시스템을 제공하며, Stardust / Plexus 처럼 효과를 중첩해 관리하는 구조를 사용합니다.
+이제 간단한 문자 분해 연출을 위해 텍스트 레이어를 모양 레이어로 변환하는 번거로운 과정 없이,
+하나의 텍스트 레이어만으로 보다 깔끔하고 비파괴적인 방식의 텍스트 작업을 구성할 수 있습니다.
+[[video:assets/text one/videos/텍스트 컬러 변경]]
+Text Save를 통해 내부적으로 ID를 매핑하고, 컨트롤러 효과를 사용해 원하는 느낌을 자유롭게 연출해보세요.
+[[video:assets/text one/videos/텍스트 변형]]
+색상뿐만 아니라 기본적인 변형 또한 가능합니다.
+[[video:assets/text one/videos/텍스트 애니메이터]]
+자체적인 텍스트 애니메이터를 제공합니다.
+효과 기반으로 설계된 텍스트 애니메이터 구조를 통해 기존 방식과는 다른 표현이 가능합니다.
+**After Effects** 텍스트 애니메이터 -> 효과 적용
+**Text One** 효과 적용 -> 텍스트 애니메이터
+이 구조적 차이 덕분에, Text One은 효과가 적용된 최종 결과 자체에 애니메이션을 적용할 수 있으며, 기존 방식으로는 어려웠던 연출을 구현할 수 있습니다.
+프랙탈 노이즈를 적용한 예시 입니다.
+[[video:assets/text one/videos/차이점 설명]]
+효과의 결과를 기반으로 동작하는 텍스트 애니메이터입니다.
+
+자세한 사용 방법은 각 파라미터 설명을 참고해주세요.
+`,
+        params: commonParamsText.ko + `
+[[toggle-image 파라미터 보기:assets/text one/images/파라미터]]
+<topic open "Text Save">
+**Text Save는 After Effects의 한계를 최대한 우회하기 위해 설계된 기능입니다.**
+모든 값은 세이브 버튼을 누르는 순간에만 반영됩니다.
+Text Sorting은 분해된 획들에 ID를 매핑하는 기준을 설정합니다. 예를 들어 Left로 설정하면, 왼쪽에서 오른쪽 순서대로 ID가 매핑됩니다.
+효과가 적용된 텍스트의 형태와 시선 흐름에 맞춰 적절한 순서를 선택하는 것을 추천드립니다.
+매핑된 ID는 컨트롤러와 텍스트 애니메이터의 애니메이션 순서에 영향을 줍니다.
+None은 After Effects의 제공하는 기본 순서입니다.
+**Controller Add** 를 통해 컨트롤러를 추가 할 수 있습니다.
+**Animater Add** 를 통해 애니메이터를 추가 할 수 있습니다.
+</topic>
+<topic open "Controller">
+**Start ID**와 **End ID**를 통해 컨트롤러가 제어할 글리프(Glyph) 범위를 지정할 수 있습니다.
+각 컨트롤러에서는 *Color*와 *Transform*설정이 가능하며,
+효과를 중첩해 동일한 *ID* 범위가 겹치는 경우에는 효과 패널에서 더 아래에 위치한 *Controller*가 우선 적용되어 덮어쓰기됩니다.
+</topic>
+<topic open "Animater">
+자체적인 텍스트 애니메이터를 제공하며, After Effects의 기본 텍스트 애니메이터와 유사한 방식으로 동작합니다.
+**Start**와 **End**를 통해 적용 범위를 지정하고,
+그 범위 안에서 **Transform / Random / Wiggle** 효과를 적용해보세요.
+[[video:assets/text one/videos/바운스]]
+**Interpolation**을 통해 움직임의 속도감을 정할 수 있습니다.
+바운스도 있으며 **Bounce Frequency**와**Bounce Decay**로 바운스의 느낌을 조절할 수 있습니다.
+[[video:assets/text one/videos/센터 오더]]
+**Order**를 통해 애니메이션 순서를 설정할 수 있습니다.
+**Center**를 활용하면 가운데 부터 시작하는 애니메이션을 만들 수 있습니다.
+[[video:assets/text one/videos/택스트 애니메이션 예시 1]]
+기본적인 활용 방식은 **After Effects**의 텍스트 애니메이터와 거의 동일합니다.
+예를 들어, 텍스트 애니메이터를 두 개 사용하여 하나는 **Shape**를 **Ramp Up**으로 설정한 뒤, **Offset**에 -100 ~ 100 키프레임을 적용해보세요.
+그리고 다른 하나는 해당 애니메이터를 복제한 뒤 **Shape**를 **Ramp Down**으로 설정합니다.
+이후 앞서 설명한 **Transform / Random / Wiggle** 값을 원하는 방식으로 조절하면, 자연스럽게 나타나는 애니메이션과 사라지는 애니메이션을 손쉽게 만들 수 있습니다.
+</topic>
+`,
+        faq:  updateText.ko + ``
+    },
+    ja: {
+    quick: `テキストレイヤーのための新しい **テキストレンダラーエフェクト** です。
+After Effects標準のテキストレイヤーが持つ最小単位である「文字（Character）」よりも細かい、グリフ（Glyph）単位でテキストを解析・レンダリングします。
+また、独自のテキストアニメーターとIDベースの変形システムを搭載しており、Stardust / Plexus のようにエフェクトを重ねて管理する構造を採用しています。
+簡単な文字分解演出のためにテキストレイヤーをシェイプレイヤーへ変換する手間なく、
+1つのテキストレイヤーだけで、よりクリーンかつ非破壊的なテキスト演出を行えます。
+[[video:assets/text one/videos/텍스트 컬러 변경]]
+Text Save によって内部的にIDをマッピングし、コントローラーエフェクトを使って自由に演出できます。
+[[video:assets/text one/videos/텍스트 변형]]
+カラー変更だけでなく、基本的な変形にも対応しています。
+[[video:assets/text one/videos/텍스트 애니메이터]]
+独自のテキストアニメーターを搭載しています。
+エフェクトベースで設計されたテキストアニメーター構造により、従来とは異なる表現が可能です。
+**After Effects** テキストアニメーター → エフェクト適用
+**Text One** エフェクト適用 → テキストアニメーター
+この構造的な違いにより、Text One ではエフェクトが適用された最終結果そのものにアニメーションを適用でき、
+従来の方法では難しかった演出を実現できます。
+フラクタルノイズを適用した例です。
+[[video:assets/text one/videos/차이점 설명]]
+エフェクトの結果を基準に動作するテキストアニメーターです。
+
+詳しい使い方については各パラメータの説明をご確認ください。
+`,
+    params: commonParamsText.ja + `
+[[toggle-image パラメータ表示:assets/text one/images/파라미터]]
+<topic open "Text Save">
+**Text Save は After Effects の制限を可能な限り回避するために設計された機能です。**
+すべての値は Save ボタンを押した瞬間にのみ反映されます。
+Text Sorting は、分解されたストロークへIDをマッピングする基準を設定します。
+例えば Left に設定すると、左から右の順番でIDが割り当てられます。
+エフェクトが適用されたテキストの形状や視線の流れに合わせて、適切な順序を選択することをおすすめします。
+マッピングされたIDは、コントローラーおよびテキストアニメーターのアニメーション順序に影響します。
+None は After Effects が提供するデフォルト順です。
+**Controller Add** でコントローラーを追加できます。
+**Animater Add** でアニメーターを追加できます。
+</topic>
+<topic open "Controller">
+**Start ID** と **End ID** によって、コントローラーが制御するグリフ（Glyph）の範囲を指定できます。
+各コントローラーでは *Color* と *Transform* の設定が可能です。
+また、エフェクトを重ねて同じ *ID* 範囲が重複した場合、
+エフェクトパネル内でより下に配置された *Controller* が優先され、上書きされます。
+</topic>
+<topic open "Animater">
+独自のテキストアニメーターを搭載しており、After Effects 標準のテキストアニメーターに近い感覚で使用できます。
+**Start** と **End** によって適用範囲を指定し、
+その範囲内で **Transform / Random / Wiggle** を適用してみてください。
+[[video:assets/text one/videos/바운스]]
+**Interpolation** によって動きのスピード感を調整できます。
+バウンス機能もあり、**Bounce Frequency** と **Bounce Decay** によってバウンスの挙動を調整できます。
+[[video:assets/text one/videos/센터 오더]]
+**Order** によってアニメーション順序を設定できます。
+**Center** を使うことで、中央から始まるアニメーションも作成できます。
+[[video:assets/text one/videos/택스트 애니메이션 예시 1]]
+基本的な使い方は After Effects のテキストアニメーターとほぼ同じです。
+例えば、テキストアニメーターを2つ使用し、
+片方の **Shape** を **Ramp Up** に設定した後、**Offset** に -100 ～ 100 のキーフレームを設定してください。
+そしてもう片方はそのアニメーターを複製し、**Shape** を **Ramp Down** に設定します。
+その後、前述した **Transform / Random / Wiggle** の値を好みに合わせて調整することで、
+自然に現れるアニメーションと消えていくアニメーションを簡単に作成できます。
+</topic>
+`,
+    faq: updateText.ja + ``
+},
+
+en: {
+    quick: `A new **text renderer effect** for text layers.
+Instead of relying on the default minimum unit of traditional After Effects text layers — the Character — this effect analyzes and renders text at a more detailed Glyph level.
+It also provides its own text animator and ID-based transformation system, using a layered workflow similar to Stardust / Plexus.
+Create clean, non-destructive text animations without the tedious process of converting text layers into shape layers for simple text decomposition effects.
+[[video:assets/text one/videos/텍스트 컬러 변경]]
+Use Text Save to internally map IDs, then freely control and stylize the result through controller effects.
+[[video:assets/text one/videos/텍스트 변형]]
+In addition to color adjustments, basic transformations are also supported.
+[[video:assets/text one/videos/텍스트 애니메이터]]
+The effect includes its own built-in text animator.
+Its effect-based text animator structure enables expressions and workflows that differ from traditional approaches.
+**After Effects** Text Animator → Apply Effects
+**Text One** Apply Effects → Text Animator
+Because of this structural difference, Text One can animate the final processed result itself,
+making it possible to achieve effects that are difficult with the traditional workflow.
+This is an example using Fractal Noise.
+[[video:assets/text one/videos/차이점 설명]]
+A text animator that operates based on the final effect result.
+
+For detailed usage instructions, please refer to the description of each parameter.
+`,
+    params: commonParamsText.en + `
+[[toggle-image View Parameters:assets/text one/images/파라미터]]
+<topic open "Text Save">
+**Text Save is a feature designed to bypass the limitations of After Effects as much as possible.**
+All values are applied only at the moment the Save button is pressed.
+Text Sorting determines how IDs are mapped to the separated strokes.
+For example, if set to Left, IDs will be assigned from left to right.
+It is recommended to choose a sorting order that matches the visual flow and shape of the processed text.
+The mapped IDs affect the animation order of both Controllers and Text Animators.
+None uses the default ordering provided by After Effects.
+Use **Controller Add** to add a controller.
+Use **Animater Add** to add an animator.
+</topic>
+<topic open "Controller">
+You can define the glyph range controlled by the controller using **Start ID** and **End ID**.
+Each controller supports both *Color* and *Transform* settings.
+If multiple effects overlap within the same *ID* range,
+the *Controller* placed lower in the Effect Panel will take priority and overwrite the previous result.
+</topic>
+<topic open "Animater">
+The effect includes its own built-in text animator, designed to work similarly to the default After Effects text animator.
+Use **Start** and **End** to define the active range,
+then apply **Transform / Random / Wiggle** effects within that range.
+[[video:assets/text one/videos/바운스]]
+Use **Interpolation** to control the motion feel and speed curve.
+Bounce is also supported, and you can customize its behavior using **Bounce Frequency** and **Bounce Decay**.
+[[video:assets/text one/videos/센터 오더]]
+Use **Order** to define the animation order.
+With **Center**, you can create animations that begin from the middle.
+[[video:assets/text one/videos/택스트 애니메이션 예시 1]]
+The overall workflow is very similar to the default After Effects text animator.
+For example, create two text animators.
+Set the **Shape** of one animator to **Ramp Up**, then animate the **Offset** from -100 to 100 using keyframes.
+Duplicate that animator and set the duplicated animator’s **Shape** to **Ramp Down**.
+Then adjust the previously mentioned **Transform / Random / Wiggle** values as desired to easily create natural appearing and disappearing text animations.
+</topic>
+`,
+    faq: updateText.en + ``
+}
+};
+
 
 
 
@@ -921,7 +1107,8 @@ Determines the rendering order of textures.
 const pluginLogs = {
     "smart-stroke": smartStrokeLog,
     "path-repeater": pathRepeaterLog,
-    "boundary-fill": boundaryFillLog
+    "boundary-fill": boundaryFillLog,
+    "text-one": textOneLog
 };
 
 let toggleGroupCounter = 0;
