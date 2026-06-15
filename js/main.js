@@ -314,6 +314,43 @@ A -> B -> C -> B-> A -> B -> C ...
 파라미터 이름에 **F*** 가 붙은 경우에는 패스의 ***Offset*** 기능에 영향을 받지 않습니다. (Fixed)
 [[video:assets/path repeater/videos/Path Distance]]
 </topic>
+<topic "Looking">
+특정 위치를 바라보게 하는 기능입니다.
+**3D Looking**를 통해서 3D로 바라보게 할 수 있습니다.
+**Controller Layer**를 지정하여 레이어의 위치를 바라보게 할 수 있습니다.
+[[video:assets/path repeater/videos/Looking]]
+</topic>
+<topic "Field">
+**Mode**를 사용하여 범위를 설정한 후, **Origin** 값을 조정하거나 Null 레이어를 **Controller Layer**로 지정하세요.
+설정된 범위 내의 복제만 아래 속성 그룹의 효과가 적용됩니다.
+**3D Field**를 활성화하면 Z축을 포함한 3차원 공간에서 영향을 줄 수 있으며, 기본값은 2D Field입니다.
+범위 내부에는 Weight 1, 범위 외부에는 Weight 0이 자동으로 적용됩니다.
+**Strength**를 사용하여 Weight의 전체 강도를 조절할 수 있으며, **Weight Curve**를 통해 Weight가 적용되는 방식을 세밀하게 조정할 수 있습니다.
+[[video:assets/path repeater/videos/Field Curve]]
+**Feather**를 사용하면 설정한 픽셀 수만큼 범위 경계의 안쪽에서 Weight가 0~1 사이로 부드럽게 변화합니다.
+**Feather Random**은 **Feather** 값에 랜덤값을 추가하여 경계의 부드러움을 복제마다 다르게 적용하는 기능입니다.
+[[video:assets/path repeater/videos/Field Feather]]
+<topic "Transform">
+기본 변형 그룹입니다. 일부 효과들은 오버 Weight를 지원합니다.
+[[video:assets/path repeater/videos/Field Scale]]
+</topic>
+<topic "Color">
+***Color Gradient*** 파라미터의 왼쪽은 Weight 0, 오른쪽은 Max Weight에 해당합니다.
+각 복제본은 자신의 Weight 값에 따라 해당하는 색상이 할당되며, **Opacity**를 통해 색상 블렌딩의 강도를 조절할 수 있습니다.
+**Weight Opacity**를 활성화하면 Opacity 값에 Weight가 곱연산으로 적용되어, 복제마다 서로 다른 Opacity 값을 적용할 수 있습니다.
+[[video:assets/path repeater/videos/Field Color]]
+</topic>
+<topic "Force">
+**Force**는 양수일 경우 복제본을 원점으로부터 밀어내고, 음수일 경우 원점 방향으로 끌어당깁니다.
+**Negative Force Kill** 음수 Force에 의해 끌려온 복제가 원점을 지나치게 될 경우 해당 복제본을 제거합니다.
+</topic>
+<topic "Time Smapling">
+기존 ***Time Sampling*** 값에 합연산으로 적용됩니다.
+**Offset Delay**를 사용하면 ***Offset Delay X Weight*** 값만큼 ***Time Sampling***을 지연시킬 수 있습니다.
+기존 ***Time Sampling - Mode***를 ***Still Frame***으로 설정하고 적절한 수치를 주면 애니메이션 재생에도 대응할 수 있습니다.
+[[video:assets/path repeater/videos/Field Time]]
+</topic>
+</topic>
 <topic "Replica">
 단순한 픽셀 복제가 아니라, 반복되는 객체 자체를 복제하는 방식입니다.
 [[video:assets/path repeater/videos/Replica]]
@@ -465,6 +502,44 @@ After Effects 標準の「パスのトリミング」と同様に動作します
 パラメータ名に **F*** が付いている場合、パスの ***Offset*** 機能の影響を受けません。（Fixed）
 [[video:assets/path repeater/videos/Path Distance]]
 </topic>
+<topic "Looking">
+指定した位置を向かせる機能です。
+**3D Looking** を有効にすると、3D空間上で対象を向くようになります。
+**Controller Layer** を指定すると、そのレイヤーの位置を向くように設定できます。
+[[video:assets/path repeater/videos/Looking]]
+</topic>
+<topic "Field">
+**Mode** を使用して影響範囲を設定し、**Origin** の値を調整するか、Nullレイヤーを **Controller Layer** として指定してください。
+設定した範囲内の複製にのみ、下記のプロパティグループの効果が適用されます。
+**3D Field** を有効にすると、Z軸を含む3次元空間で影響を与えることができます。デフォルトは2D Fieldです。
+範囲内の複製には Weight 1、範囲外の複製には Weight 0 が自動的に適用されます。
+**Strength** を使用して Weight の全体的な強さを調整できます。また、**Weight Curve** を使用することで Weight の適用方法を細かく制御できます。
+[[video:assets/path repeater/videos/Field Curve]]
+**Feather** を使用すると、指定したピクセル数の範囲で境界の内側から Weight が 0～1 に滑らかに変化します。
+**Feather Random** は **Feather** の値にランダム値を加え、複製ごとに異なるフェード幅を適用する機能です。
+[[video:assets/path repeater/videos/Field Feather]]
+<topic "Transform">
+基本的な変形グループです。
+一部のパラメータは Weight による制御に対応しています。
+[[video:assets/path repeater/videos/Field Scale]]
+</topic>
+<topic "Color">
+***Color Gradient*** パラメータの左端は Weight 0、右端は最大 Weight を表します。
+各複製には自身の Weight 値に応じた色が割り当てられ、**Opacity** で色のブレンド強度を調整できます。
+**Weight Opacity** を有効にすると、Opacity に Weight が乗算されるため、複製ごとに異なる不透明度を適用できます。
+[[video:assets/path repeater/videos/Field Color]]
+</topic>
+<topic "Force">
+**Force** が正の値の場合は複製を原点から押し出し、負の値の場合は原点方向へ引き寄せます。
+**Negative Force Kill** を有効にすると、負の Force によって原点を通り過ぎた複製が削除されます。
+</topic>
+<topic "Time Sampling">
+既存の ***Time Sampling*** の値に加算して適用されます。
+**Offset Delay** を使用すると、***Offset Delay × Weight*** の値だけ ***Time Sampling*** を遅延させることができます。
+また、***Time Sampling - Mode*** を ***Still Frame*** に設定し、適切な値を指定することで、アニメーションが再生されている素材にも対応できます。
+[[video:assets/path repeater/videos/Field Time]]
+</topic>
+</topic>
 <topic "Replica">
 単純なピクセルの複製ではなく、繰り返されるオブジェクト自体を複製する方式です。
 [[video:assets/path repeater/videos/Replica]]
@@ -614,6 +689,44 @@ Transforms related to duplication.
 Allows changes based on distance.
 If the parameter name includes **F***, it is not affected by the path ***Offset*** feature. (Fixed)
 [[video:assets/path repeater/videos/Path Distance]]
+</topic>
+<topic "Looking">
+Makes each clone look toward a specific position.
+Enable **3D Looking** to orient clones in 3D space.
+You can assign a **Controller Layer** and have the clones look toward that layer's position.
+[[video:assets/path repeater/videos/Looking]]
+</topic>
+<topic "Field">
+Use **Mode** to define the area of influence, then adjust the **Origin** value or assign a Null object as the **Controller Layer**.
+Only clones within the defined area will be affected by the property groups below.
+Enable **3D Field** to affect clones in 3D space, including the Z axis. By default, the Field operates in 2D mode.
+Clones inside the area are automatically assigned a Weight of 1, while clones outside the area receive a Weight of 0.
+Use **Strength** to control the overall intensity of the Weight, and **Weight Curve** to fine-tune how the Weight is distributed.
+[[video:assets/path repeater/videos/Field Curve]]
+Use **Feather** to create a smooth transition from Weight 0 to 1 within the specified pixel distance from the boundary.
+**Feather Random** adds a random variation to the **Feather** value, allowing each clone to have a slightly different falloff.
+[[video:assets/path repeater/videos/Field Feather]]
+<topic "Transform">
+Basic transformation controls.
+Some parameters support Weight-based influence.
+[[video:assets/path repeater/videos/Field Scale]]
+</topic>
+<topic "Color">
+In the ***Color Gradient*** parameter, the left side represents Weight 0 and the right side represents the maximum Weight.
+Each clone is assigned a color based on its Weight value, and **Opacity** controls the blending strength of the assigned color.
+When **Weight Opacity** is enabled, the Opacity value is multiplied by the clone's Weight, allowing each clone to have a different opacity.
+[[video:assets/path repeater/videos/Field Color]]
+</topic>
+<topic "Force">
+A positive **Force** value pushes clones away from the origin, while a negative value pulls them toward it.
+When **Negative Force Kill** is enabled, any clone pulled past the origin by a negative Force will be removed.
+</topic>
+<topic "Time Sampling">
+Applied additively to the existing ***Time Sampling*** value.
+Use **Offset Delay** to delay the ***Time Sampling*** value by ***Offset Delay × Weight***.
+You can also set ***Time Sampling - Mode*** to ***Still Frame*** and use an appropriate value to make the effect work with animated sources.
+[[video:assets/path repeater/videos/Field Time]]
+</topic>
 </topic>
 <topic "Replica">
 This is not a simple pixel duplication, but a method that duplicates the repeating object itself.
