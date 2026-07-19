@@ -1210,6 +1210,276 @@ Then adjust the previously mentioned **Transform / Random / Wiggle** values as d
 }
 };
 
+const MotionPathStrokeLog = {
+    ko: {
+        quick: `완벽한 곡선과 간단한 조작감을 구현하기 위해 **동작 패스를 사용하여 스트로크를 생성**하는 효과입니다.
+After Effects의 ***Mask Path*** 같은 기능은 3D의 z축 옵션을 제공하지 않아 별도의 다른 플러그인은 z축을 파라미터 등의 방식으로 관리합니다.
+하지만 이런 방식은 조작감이 편하다고는 할 수 없는 방식이기 때문에 그걸 보완한 이 효과는 지정된 레이어의 동작 패스를 가져와서 작동합니다.
+동작 패스는 3D 적으로 조작할 수 있기 때문에 깔끔한 조작감으로 다룰 수 있습니다.
+[[video:assets/motion path stroke/videos/3D조작]]
+Null 레이어를 지정하여 Position에 keyFrame 를 생성하는 걸로 스트로크가 생성됩니다.
+[[video:assets/motion path stroke/videos/Sampling Point]]
+작동방식은 간단합니다. 레이어의 Start Point에서 End Point 까지 Sampling Point 만큼 나눠서 Position를 가져와 스트로크를 생성합니다.
+다음과 같은 작동방식 이기때문에 레이어의 Start Point 와 End Point를 레이어의 KeyFreame에 딱 맞게 지속시간을 설정해주세요.
+[[video:assets/motion path stroke/videos/단색 텍스쳐 매핑]]
+원하는 색의 단색를 설정하거나 텍스쳐를 매핑할 수 있습니다.
+자세한 사용 방법은 각 파라미터 설명을 참고해주세요.
+`,
+        params: commonParamsText.ko + `
+<topic open "Motion Path Stroke">
+메인 효과 입니다. 이 효과안의 모든 파라미터는 모든 스트로크에 작동합니다.
+**Stroke** 스트로크의 굵기를 커브로 세세하게 제어할 수 있습니다.
+<topic open "Transform">
+**Controller Layer**에 Null레이어를 지정하여 After Effects의 레이어 변형을 그대로 가져올 수 있습니다.
+</topic>
+<topic open "Twist">
+**Twist** 수치만큼 선을 꼬아줍니다.
+[[video:assets/motion path stroke/videos/Twist]]
+</topic>
+<topic open "Wave">
+**length** 의 간격으로 **Amplitude** 수치의 강도만큼 스트로크가 움직입니다. Offset를 통해서 애니메이션을 줄 수 있습니다.
+[[video:assets/motion path stroke/videos/Wave]]
+</topic>
+<topic open "Noize">
+**Noize**는 **Wave** 하고 다르게 3D에 스트로크 위치를 기반으로 무작위적인 노이즈로 스트로크를 휘게 합니다.
+</topic>
+<topic open "Camera">
+3D 기능을 사용하려면 **Camera Mode**를 **AE Camera**로 설정해야 합니다.
+카메라 레이어가 생성되어 있지 않으면 3D 공간이 정확하게 계산되지 안습니다, 카메라 레이어를 생성한 상태에서 사용해 주세요.
+<topic open "Occlusion">
+**콜랩스(해 아이콘) 레이어 전용입니다.**
+레이어를 지정만 하면 Z축에 따라서 클리핑이 되게 설정되었습니다.
+간단한 방식을 위해서 정확도는 살짝 포기했습니다. 과도한 카메라 회전이나 지정한 레이어하고 너무 가까운 스트로크에서는 정확하지 않게 작동할 수 있습니다.
+**Occlusion** 기능을 사용하기위해서는 지정한 레이어가 효과를 적용한 단색레이어보다 밑에 있어야하며 카메라 레이어가 생성되어
+있어야합니다.
+[[video:assets/motion path stroke/videos/오클루젼 1]]
+Text Layer와 Shape Layer는 기본적으로 콜랩스 레이어이므로 레이어를 지정하는 것만으로 사용할 수 있습니다.
+Footage Layer는 아래와 같은 방법으로 콜랩스 레이어로 만들어 사용할 수 있습니다.
+1. Footage Layer를 프리컴포지션한 후, 프리컴포지션 내부의 레이어를 3D 레이어로 활성화합니다. (내부 레이어의 Z축 값은 변경하지 않고 0으로 유지합니다.)
+2. 프리컴포지션 레이어의 콜랩스 기능과 3D 기능을 활성화합니다.
+3. 프리컴포지션 레이어의 Z축 값을 조절하여 사용합니다.
+[[video:assets/motion path stroke/videos/오클루젼 2]]
+</topic>
+</topic>
+</topic>
+<topic open "Path Controller">
+개별적인 스트로크의 대한 컨트롤러 효과입니다.
+**Motion Path Layer**에 Null레이어를 지정하고 Position의 KerFrame를 사용하여 움직임을 줘보세요
+그러면 **Sampling Point** 레이어의 지속시간을 수치만큼 쪼개서 위치를 샘플링합니다.
+**Stokre** 스트로크의 굵기를 제어합니다.
+**Offset** 텍스쳐의 오프셋 입니다.
+<topic open "Trimming">
+**Start & End** 스트로크의 시작과 끝을 자릅니다.
+**Start Feather & End Feather** 스트로크의 잘라진 스트로크의 페더입니다.
+**Strart 0%**
+**End 10%**
+**End Feather 10%**
+다음과 같은 수치라면 0~10% 부분이 보여지고 10~20% 구간이 Feather로 서서히 보여집니다.
+F가 붙여진 파라미터는 Fixed 를 뜻합니다 **Offset**하고 상관없이 전체 Path 경로를 기준으로 합니다.
+<topic open "Taper">
+**Start & End** 스트로크의 끝부분을 날카롭게 합니다.
+</topic>
+**Color Mode** 스트로크에 대한 컬러 모드입니다.
+Color와 Texture두가지 모드를 제공하며 Gradient는 자체적인 기능으로 없지만
+Texture 매핑 기능을 활용하여 Gradine를 매핑하여 사용할 수 있습니다.
+<topic open "Texture">
+**Texture** 텍스쳐 레이어를 지정하여 스트로크에 매핑합니다.
+**Length** 텍스쳐 한 타일의 길이를 설정합니다. 스트로크 길이가 **Length**보다 길 경우 텍스쳐가 반복되어 표시됩니다.
+**Normalized** 텍스쳐를 스트로크 전체 길이에 맞게 자동으로 늘리거나 축소하여 매핑합니다. **Length** 수치는 무시됩니다.
+**UV Scale X** 텍스쳐의 UV 크기를 조절합니다. **Normalized**된 텍스쳐를 **50%**로 설정하면 2번 **25%**로 설정하면 4번 반복됩니다.
+**Tiling Mode** 텍스쳐가 반복될때마다 처리되는 방식을 정합니다.
+</topic>
+</topic>
+</topic>
+
+`,
+        faq:  updateText.ko + ``
+    },
+   ja: {
+    quick: `完璧なカーブとシンプルな操作性を実現するために、**モーションパスを利用してストロークを生成するエフェクト**です。
+After Effects の ***Mask Path*** のような機能には 3D の Z 軸情報が存在しないため、多くの類似プラグインでは Z 軸をパラメータなどで個別に管理しています。
+しかし、その方法は必ずしも直感的とは言えません。
+このエフェクトでは、その問題を解決するために指定したレイヤーのモーションパスを取得してストロークを生成します。
+モーションパスは 3D 空間上で直接編集できるため、より自然で分かりやすい操作が可能です。
+[[video:assets/motion path stroke/videos/3D조작]]
+Null レイヤーを指定し、Position にキーフレームを設定するだけでストロークが生成されます。
+[[video:assets/motion path stroke/videos/Sampling Point]]
+動作は非常にシンプルです。
+レイヤーの Start Point から End Point までを Sampling Point の数だけ分割し、それぞれの Position を取得してストロークを生成します。
+この仕組みのため、レイヤーの Start Point と End Point がキーフレームのタイミングに合うようにレイヤーの長さを設定してください。
+[[video:assets/motion path stroke/videos/단색 텍스쳐 매핑]]
+単色カラーを使用することも、テクスチャをマッピングすることもできます。
+詳しい使用方法については各パラメータの説明をご確認ください。
+`,
+
+    params: commonParamsText.ja + `
+<topic open "Motion Path Stroke">
+メインエフェクトです。このエフェクト内のすべてのパラメータは、すべてのストロークに適用されます。
+**Stroke** ストロークの太さをカーブで細かく制御できます。
+<topic open "Transform">
+**Controller Layer** に Null レイヤーを指定すると、After Effects のレイヤートランスフォームをそのまま取得できます。
+</topic>
+<topic open "Twist">
+**Twist** の値だけストロークをねじります。
+[[video:assets/motion path stroke/videos/Twist]]
+</topic>
+<topic open "Wave">
+**Length** 間隔ごとに **Amplitude** の強さでストロークを変形します。
+**Offset** をアニメーションさせることで動きを付けることができます。
+[[video:assets/motion path stroke/videos/Wave]]
+</topic>
+<topic open "Noise">
+**Noise** は **Wave** と異なり、3D 空間上のストローク位置を基準にランダムなノイズでストロークを変形します。
+</topic>
+<topic open "Camera">
+3D 機能を使用するには **Camera Mode** を **AE Camera** に設定する必要があります。
+カメラレイヤーが存在しない場合、3D 空間の計算が正しく行われません。
+必ずカメラレイヤーを作成した状態で使用してください。
+<topic open "Occlusion">
+**コラプス（太陽アイコン）レイヤー専用機能です。**
+レイヤーを指定するだけで、Z 軸に基づいたクリッピングが行われます。
+簡単な仕組みを優先しているため、精度は多少犠牲にしています。
+極端なカメラ回転や、指定レイヤーに非常に近いストロークでは正確に動作しない場合があります。
+**Occlusion** を使用するには、指定したレイヤーがエフェクトを適用したソリッドレイヤーより下に配置されており、カメラレイヤーが作成されている必要があります。
+[[video:assets/motion path stroke/videos/오클루젼 1]]
+Text Layer と Shape Layer は基本的にコラプス（連続ラスタライズ）レイヤーのため、レイヤーを指定するだけで使用できます。
+Footage Layer は以下の方法でコラプスレイヤー化して使用できます。
+1. Footage Layer をプリコンポーズし、プリコンポジション内のレイヤーを 3D レイヤーとして有効にします。（内部レイヤーの Z 値は変更せず 0 のままにしてください。）
+2. プリコンポジションレイヤーのコラプス（連続ラスタライズ）と 3D を有効にします。
+3. プリコンポジションレイヤーの Z 値を調整して使用します。
+[[video:assets/motion path stroke/videos/오클루젼 2]]
+</topic>
+</topic>
+</topic>
+<topic open "Path Controller">
+各ストロークを個別に制御するためのコントローラーエフェクトです。
+**Motion Path Layer** に Null レイヤーを指定し、Position にキーフレームを設定して動かしてください。
+すると **Sampling Point** の数だけレイヤーの時間を分割し、それぞれの位置をサンプリングします。
+**Stroke** ストロークの太さを制御します。
+**Offset** テクスチャのオフセットです。
+<topic open "Trimming">
+**Start & End** ストロークの開始位置と終了位置をトリミングします。
+**Start Feather & End Feather** トリミングされた部分のフェザーです。
+**Start 0%**
+**End 10%**
+**End Feather 10%**
+この場合、0〜10% の範囲が表示され、10〜20% の範囲がフェザーとして徐々に表示されます。
+F が付いたパラメータは Fixed を意味します。
+**Offset** の影響を受けず、常にパス全体を基準として計算されます。
+<topic open "Taper">
+**Start & End** ストロークの端を尖らせます。
+</topic>
+**Color Mode** ストロークのカラー設定です。
+Color と Texture の 2 つのモードがあります。
+Gradient 機能はありませんが、テクスチャを利用してグラデーションをマッピングすることができます。
+<topic open "Texture">
+**Texture** テクスチャレイヤーをストロークにマッピングします。
+**Length** テクスチャ 1 タイル分の長さを設定します。
+ストロークの長さが **Length** より長い場合、テクスチャが繰り返されます。
+**Normalized** テクスチャをストローク全体の長さに合わせて自動的に拡大・縮小してマッピングします。
+この場合 **Length** の値は無視されます。
+**UV Scale X** テクスチャの UV スケールを調整します。
+**Normalized** が有効な状態で **50%** に設定すると 2 回、**25%** に設定すると 4 回繰り返されます。
+**Tiling Mode** テクスチャが繰り返される際の処理方法を設定します。
+</topic>
+</topic>
+</topic>
+`,
+    faq: updateText.ja + ``
+},en: {
+    quick: `An effect that **generates strokes using motion paths**, designed to provide smooth curves and intuitive controls.
+After Effects ***Mask Path*** does not contain 3D Z-axis information, so many similar plugins require users to manage depth through separate parameters.
+While functional, that workflow is not always intuitive.
+To solve this problem, this effect generates strokes by sampling the motion path of a specified layer.
+Because motion paths can be edited directly in 3D space, they provide a much cleaner and more natural workflow.
+[[video:assets/motion path stroke/videos/3D조작]]
+Simply assign a Null layer and animate its Position with keyframes to generate a stroke.
+[[video:assets/motion path stroke/videos/Sampling Point]]
+The principle is straightforward.
+The effect samples positions between the layer's Start Point and End Point according to the Sampling Point value, then generates a stroke from those sampled positions.
+Because of this workflow, it is recommended to set the layer duration so that the Start Point and End Point align with the desired keyframe range.
+[[video:assets/motion path stroke/videos/단색 텍스쳐 매핑]]
+You can use either a solid color or map a texture onto the stroke.
+For detailed usage instructions, please refer to the description of each parameter.
+`,
+
+    params: commonParamsText.en + `
+<topic open "Motion Path Stroke">
+This is the main effect. All parameters inside this effect are applied to every stroke.
+**Stroke** Allows precise control over stroke thickness using a curve.
+<topic open "Transform">
+Assign a Null layer to **Controller Layer** to use the layer's native After Effects transforms.
+</topic>
+<topic open "Twist">
+Twists the stroke by the specified **Twist** amount.
+[[video:assets/motion path stroke/videos/Twist]]
+</topic>
+<topic open "Wave">
+Moves the stroke by the specified **Amplitude** at intervals defined by **Length**.
+Animate **Offset** to create motion.
+[[video:assets/motion path stroke/videos/Wave]]
+</topic>
+<topic open "Noise">
+Unlike **Wave**, **Noise** bends the stroke using random noise based on its position in 3D space.
+</topic>
+<topic open "Camera">
+To use 3D features, **Camera Mode** must be set to **AE Camera**.
+If no camera layer exists, the 3D space cannot be calculated correctly.
+Please create a camera layer before using this mode.
+<topic open "Occlusion">
+**Only supported on Collapse Transformation (Sun Icon) layers.**
+Simply assign a layer to enable Z-based clipping.
+To keep the setup simple, some accuracy has been sacrificed.
+Results may become inaccurate with extreme camera rotations or when strokes are very close to the assigned layer.
+To use **Occlusion**, the assigned layer must be placed below the Solid Layer that has the effect applied, and a Camera Layer must exist in the composition.
+[[video:assets/motion path stroke/videos/오클루젼 1]]
+Text Layers and Shape Layers are effectively Collapse Transformation layers by default, so they can be used simply by assigning the layer.
+Footage Layers can be converted into Collapse Transformation layers using the following workflow:
+1. Pre-compose the Footage Layer, then enable 3D for the layer inside the pre-composition. (Keep the internal layer's Z position at 0.)
+2. Enable both **Collapse Transformations** and **3D Layer** for the pre-composition layer.
+3. Adjust the Z position of the pre-composition layer as needed.
+[[video:assets/motion path stroke/videos/오클루젼 2]]
+</topic>
+</topic>
+</topic>
+<topic open "Path Controller">
+A controller effect used to adjust individual strokes.
+Assign a Null layer to **Motion Path Layer** and animate its Position with keyframes.
+The effect samples positions by dividing the layer duration according to the **Sampling Point** value.
+**Stroke** Controls the thickness of the stroke.
+**Offset** Controls the texture offset.
+<topic open "Trimming">
+**Start & End** Trim the beginning and end of the stroke.
+**Start Feather & End Feather** Control the feathering of the trimmed region.
+**Start 0%**
+**End 10%**
+**End Feather 10%**
+With these settings, the 0–10% section is visible, while the 10–20% section gradually fades in using feathering.
+Parameters marked with **F** mean **Fixed**.
+They are calculated using the entire path as a reference and are not affected by **Offset**.
+<topic open "Taper">
+**Start & End** Create sharp tapered ends on the stroke.
+</topic>
+
+**Color Mode** Defines the stroke coloring method.
+Both **Color** and **Texture** modes are available.
+A dedicated gradient mode is not included, but gradients can be mapped using a texture.
+<topic open "Texture">
+**Texture** Assigns a texture layer to the stroke.
+**Length** Defines the length of a single texture tile.
+If the stroke is longer than **Length**, the texture repeats.
+**Normalized** Automatically stretches or compresses the texture to fit the entire stroke length.
+When enabled, **Length** is ignored.
+**UV Scale X** Adjusts the horizontal UV scale of the texture.
+With **Normalized** enabled, setting it to **50%** repeats the texture twice, and **25%** repeats it four times.
+**Tiling Mode** Determines how the texture behaves when it repeats.
+</topic>
+</topic>
+</topic>
+`,
+    faq: updateText.en + ``
+},
+};
 
 
 
@@ -1221,7 +1491,8 @@ const pluginLogs = {
     "smart-stroke": smartStrokeLog,
     "path-repeater": pathRepeaterLog,
     "boundary-fill": boundaryFillLog,
-    "text-one": textOneLog
+    "text-one": textOneLog,
+    "motion-path-stroke": MotionPathStrokeLog
 };
 
 let toggleGroupCounter = 0;
