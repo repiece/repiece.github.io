@@ -15,6 +15,8 @@
         <button data-target="boundary-fill">Boundary Fill</button>
         <button data-target="text-one">Text One</button>
         <button data-target="motion-path-stroke">Motion Path Stroke</button>
+        <!-- 💡 text_fill -> text-fill 로 변경하여 ID와 일치시킴 -->
+        <button data-target="text-fill">Text Fill</button>
     </nav>
 
     <div class="language-select">
@@ -33,59 +35,68 @@
     <button data-sub="faq"></button>
 </nav>
 
-
-
     <!-- 🔹 Smart Stroke -->
-    <section id="smart-stroke"  class="content-section active">
+    <section id="smart-stroke" class="content-section active">
         <h2>Smart Stroke</h2>
-
-    <div class="sub-content">
-    <div class="sub-section active" data-sub="quick" data-i18n="smart-stroke.quick"></div>
-    <div class="sub-section" data-sub="params" data-i18n="smart-stroke.params"></div>
-    <div class="sub-section" data-sub="faq" data-i18n="smart-stroke.faq"></div>
-
+        <div class="sub-content">
+            <div class="sub-section active" data-sub="quick" data-i18n="smart-stroke.quick"></div>
+            <div class="sub-section" data-sub="params" data-i18n="smart-stroke.params"></div>
+            <div class="sub-section" data-sub="faq" data-i18n="smart-stroke.faq"></div>
+        </div> <!-- 💡 닫는 태그 추가 -->
     </section>
 
     <!-- 🔹 Path Repeater -->
     <section id="path-repeater" class="content-section">
         <h2>Path Repeater</h2>
-    <div class="sub-content">
-    <div class="sub-section active" data-sub="quick" data-i18n="path-repeater.quick"></div>
-    <div class="sub-section" data-sub="params" data-i18n="path-repeater.params"></div>
-    <div class="sub-section" data-sub="faq" data-i18n="path-repeater.faq"></div>
-  <div class="sub-content">
+        <div class="sub-content">
+            <div class="sub-section active" data-sub="quick" data-i18n="path-repeater.quick"></div>
+            <div class="sub-section" data-sub="params" data-i18n="path-repeater.params"></div>
+            <div class="sub-section" data-sub="faq" data-i18n="path-repeater.faq"></div>
+        </div> <!-- 💡 <div class="sub-content"> 오타 수정 -> </div> -->
     </section>
 
-
+    <!-- 🔹 Boundary Fill -->
     <section id="boundary-fill" class="content-section">
         <h2>Boundary Fill</h2>
-    <div class="sub-content">
-    <div class="sub-section active" data-sub="quick" data-i18n="boundary-fill.quick"></div>
-    <div class="sub-section" data-sub="params" data-i18n="boundary-fill.params"></div>
-    <div class="sub-section" data-sub="faq" data-i18n="boundary-fill.faq"></div>
-  <div class="sub-content">
+        <div class="sub-content">
+            <div class="sub-section active" data-sub="quick" data-i18n="boundary-fill.quick"></div>
+            <div class="sub-section" data-sub="params" data-i18n="boundary-fill.params"></div>
+            <div class="sub-section" data-sub="faq" data-i18n="boundary-fill.faq"></div>
+        </div> <!-- 💡 <div class="sub-content"> 오타 수정 -> </div> -->
     </section>
 
+    <!-- 🔹 Text One -->
     <section id="text-one" class="content-section">
         <h2>Text One</h2>
-    <div class="sub-content">
-    <div class="sub-section active" data-sub="quick" data-i18n="text-one.quick"></div>
-    <div class="sub-section" data-sub="params" data-i18n="text-one.params"></div>
-    <div class="sub-section" data-sub="faq" data-i18n="text-one.faq"></div>
-  <div class="sub-content">
+        <div class="sub-content">
+            <div class="sub-section active" data-sub="quick" data-i18n="text-one.quick"></div>
+            <div class="sub-section" data-sub="params" data-i18n="text-one.params"></div>
+            <div class="sub-section" data-sub="faq" data-i18n="text-one.faq"></div>
+        </div> <!-- 💡 <div class="sub-content"> 오타 수정 -> </div> -->
     </section>
 
+    <!-- 🔹 Motion Path Stroke -->
     <section id="motion-path-stroke" class="content-section">
         <h2>Motion Path Stroke</h2>
-    <div class="sub-content">
-    <div class="sub-section active" data-sub="quick" data-i18n="motion-path-stroke.quick"></div>
-    <div class="sub-section" data-sub="params" data-i18n="tmotion-path-stroke.params"></div>
-    <div class="sub-section" data-sub="faq" data-i18n="motion-path-stroke.faq"></div>
-  <div class="sub-content">
+        <div class="sub-content">
+            <div class="sub-section active" data-sub="quick" data-i18n="motion-path-stroke.quick"></div>
+            <!-- 💡 tmotion-path-stroke.params 오타 수정 -> motion-path-stroke.params -->
+            <div class="sub-section" data-sub="params" data-i18n="motion-path-stroke.params"></div>
+            <div class="sub-section" data-sub="faq" data-i18n="motion-path-stroke.faq"></div>
+        </div> <!-- 💡 <div class="sub-content"> 오타 수정 -> </div> -->
+    </section>
+
+    <!-- 🔹 Text Fill -->
+    <section id="text-fill" class="content-section">
+        <h2>Text Fill</h2>
+        <div class="sub-content">
+            <div class="sub-section active" data-sub="quick" data-i18n="text-fill.quick"></div>
+            <div class="sub-section" data-sub="params" data-i18n="text-fill.params"></div>
+            <div class="sub-section" data-sub="faq" data-i18n="text-fill.faq"></div>
+        </div> <!-- 💡 <div class="sub-content"> 오타 수정 -> </div> -->
     </section>
 </main>
 
-<!-- ✅ body 맨 아래 -->
 <script src="./js/main.js"></script>
 </body>
 </html>

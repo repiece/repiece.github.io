@@ -1210,7 +1210,7 @@ Then adjust the previously mentioned **Transform / Random / Wiggle** values as d
 }
 };
 
-const MotionPathStrokeLog = {
+const motionPathStrokeLog = {
     ko: {
         quick: `완벽한 곡선과 간단한 조작감을 구현하기 위해 **동작 패스를 사용하여 스트로크를 생성**하는 효과입니다.
 After Effects의 ***Mask Path*** 같은 기능은 3D의 z축 옵션을 제공하지 않아 별도의 다른 플러그인은 z축을 파라미터 등의 방식으로 관리합니다.
@@ -1223,6 +1223,7 @@ Null 레이어를 지정하여 Position에 keyFrame 를 생성하는 걸로 스�
 다음과 같은 작동방식 이기때문에 레이어의 Start Point 와 End Point를 레이어의 KeyFreame에 딱 맞게 지속시간을 설정해주세요.
 [[video:assets/motion path stroke/videos/단색 텍스쳐 매핑]]
 원하는 색의 단색를 설정하거나 텍스쳐를 매핑할 수 있습니다.
+[[video:assets/motion path stroke/videos/라인 모음 1]]
 자세한 사용 방법은 각 파라미터 설명을 참고해주세요.
 `,
         params: commonParamsText.ko + `
@@ -1318,6 +1319,7 @@ Null レイヤーを指定し、Position にキーフレームを設定するだ
 この仕組みのため、レイヤーの Start Point と End Point がキーフレームのタイミングに合うようにレイヤーの長さを設定してください。
 [[video:assets/motion path stroke/videos/단색 텍스쳐 매핑]]
 単色カラーを使用することも、テクスチャをマッピングすることもできます。
+[[video:assets/motion path stroke/videos/라인 모음 1]]
 詳しい使用方法については各パラメータの説明をご確認ください。
 `,
 
@@ -1423,6 +1425,7 @@ The effect samples positions between the layer's Start Point and End Point accor
 Because of this workflow, it is recommended to set the layer duration so that the Start Point and End Point align with the desired keyframe range.
 [[video:assets/motion path stroke/videos/단색 텍스쳐 매핑]]
 You can use either a solid color or map a texture onto the stroke.
+[[video:assets/motion path stroke/videos/라인 모음 1]]
 For detailed usage instructions, please refer to the description of each parameter.
 `,
 
@@ -1516,6 +1519,209 @@ If the result feels too repetitive, try using the **Random** feature to add vari
 };
 
 
+const textFillLog = {
+    ko: {
+        quick: `텍스트를 서로 떨어져 있는 **글리프 단위로 개별 색칠할 수 있는 텍스트 전용 플러그인**입니다.
+텍스트의 움직임을 추적하는 **Dynamic** 기능을 통해 텍스트가 움직이거나 애니메이터로 애니메이션되더라도
+색칠된 결과가 텍스트를 따라가며 일관되게 유지됩니다.
+각 획에 랜덤하게 색상을 적용하거나 원하는 패턴을 골라 꾸밈 있는 텍스트를 간단하게 연출할 수 있습니다.
+[[video:assets/text fill/videos/텍스트 꾸미기]]
+[[video:assets/text fill/videos/프로모션]]
+자세한 사용 방법은 각 파라미터 설명을 참고해주세요.
+`,
+        params: commonParamsText.ko + `
+**Color** 색상을 지정할 수 있는 커스텀 파라미터 입니다.
+**Mode** 각 획별로 색상을 고르는 규칙입니다.
+[[video:assets/text fill/videos/텍스트 칠]]
+<topic "3D Transform">
+**Camera** 를 **AE Camera**로 설정하면 사용할 수 있는 3D 변형입니다.
+z축값의 변형을 담당합니다. 자세한 설명은 **Camera** 그룹을 확인해주세요
+</topic>
+<topic "Opacity">
+커브 파라미터를 통해서 알파값을 조절 할 수 있습니다.
+[[video:assets/text fill/videos/불투명도 조절]]
+</topic>
+<topic "Gradient"> 각 획 별로 적용되는 **Gradient** 입니다.
+**Opacity**를 통해 적용되는 **Rotation** 각도의 끝부분의 불투명도를 조절할 수 있습니다. 시작 부분은 투명하게 표현되고 끝부분으로 갈수록 색상이 나타나는 방식입니다.
+**Start Strength**를 통해 시작 부분의 불투명도 강도를 조절할 수 있습니다.
+[[video:assets/text fill/videos/그라디언트]]
+</topic>
+<topic "Pattern">
+**Shape**를 선택하여 텍스트위에 반복되는 패턴을 구현할 수 있습니다.
+**Shape - Feather** 패턴 **Shape**의 중심부에서 멀어질수록 흐려지는 페더입니다.
+**Spacing** 반복되는 패턴의 간격 입니다.
+**Rotation** 반복되는 패턴의 회전 축 입니다.
+[[video:assets/text fill/videos/패턴]]
+</topic>
+<topic "Highlight">
+텍스트의 **Highlight**를 추가할 수 있습니다.
+[[video:assets/text fill/videos/하이라이트]]
+**Edge Distance** 텍스트의 가장자리 부분하고의 거리를 설정합니다.
+</topic>
+<topic "Line Highlight">
+**Highlight**와 중첩하여 사용할 수 있으며, **Edge Distance** 기능을 제외하면 **Highlight**와 동일하게 사용할 수 있습니다.
+[[video:assets/text fill/videos/라인 하이라이트]]
+</topic>
+<topic "Dynamic">
+텍스트의 움직임에 따라 적용된 효과도 함께 움직이도록 하는 설정입니다.
+**Highlight & Pattern**을 중심으로 살펴보면, **Dynamic** 기능이 적용된 경우
+텍스트가 애니메이션으로 움직이더라도 효과의 결과가 일정하게 유지되는 것을 확인할 수 있습니다.
+[[video:assets/text fill/videos/다이나믹 2]]
+[[video:assets/text fill/videos/다이나믹]]
+</topic>
+<topic "Camera">
+After Effect의 작동 방식상 카메라 등의 움직임으로 3D 회전이 들어가면 효과는 회전하지 않는 현상이 발생합니다.
+Gradient는 색상이 매끄럽게 변화하기 때문에 이러한 차이가 크게 느껴지지 않을 수 있습니다. 반면 Pattern은 규칙적인 형태를 가지고 있어 텍스트의 크기 변화에 따른 차이를 더욱 쉽게 확인할 수 있습니다.
+이를 보완하기 위해 효과 자체적으로 3D 기능을 지원합니다.
+단, 효과 자체의 3D 기능을 사용하는 경우 텍스트의 크기가 컴포지션 크기를 초과하지 않도록 주의해야 합니다.
+**효과 자체의 3D 레이어의 3D 서로 장단점이 있습니다.** 권장하는 방식은 없습니다. 적용해보시고 좋은쪽으로 사용하세요
+[[video:assets/text fill/videos/카메라]]
+</topic>
+Order 그려지는 순서입니다.
+**G** gradinet
+**P** Pattern
+**H** Highlight
+**L** Line Highlight
+효과 내부에 여러 개의 레이어가 있으며, 그 레이어들의 순서라고 생각하시면 이해하기 쉽습니다.
+레이어 순서를 변경하고 효과 내부의 **Blending Mode**를 활용해 다양한 방식으로 꾸며보세요.
+`,
+        faq: updateText.ko + ``
+    },
+
+    ja: {
+        quick: `テキストを離れた**グリフ（文字）単位で個別に dynamic に着色できるテキスト専用プラグイン**です。
+テキストの動きを追従する **Dynamic** 機能により、テキストが移動したりアニメーターでアニメーションしても、
+着色された stroke がテキストに追従し、一貫した結果を維持します。
+各ストロークにランダムにカラーを適用したり、お好みのパターンを選んで装飾的なテキストを簡単に演出できます。
+[[video:assets/text fill/videos/텍스트 꾸미기]]
+[[video:assets/text fill/videos/프로모션]]
+詳しい使用方法については、各パラメータの説明をご確認ください。
+`,
+        params: commonParamsText.ja + `
+**Color** カラーを指定できるカスタムパラメータです。
+**Mode** 各ストローク（画）ごとにカラーを選ぶルールです。
+[[video:assets/text fill/videos/텍스트 칠]]
+<topic "3D Transform">
+**Camera** を **AE Camera** に設定すると hover して使用できる 3D 変形です。
+Z軸の値の変形を担当します。詳細な説明は **Camera** グループをご確認ください。
+</topic>
+<topic "Opacity">
+カーブパラメータを通じてアルファ値を調整できます。
+[[video:assets/text fill/videos/불투명도 조절]]
+</topic>
+<topic "Gradient"> 各ストロー크ごとに適用される **Gradient** です。
+**Opacity** を通じて適用される **Rotation** 角度の端の部分の不透明度を調整できます。開始部分は透明に表現され、端に向かうにつれてカラーが現れる仕組みです。
+**Start Strength** を通じて開始部分の不透明度の強度を調整できます。
+[[video:assets/text fill/videos/그라디언트]]
+</topic>
+<topic "Pattern">
+**Shape** を選択してテキスト上に繰り返されるパターンを実装できます。
+**Shape - Feather** パターン **Shape** の中心部から離れるほどぼやけるフェザーです。
+**Spacing** 繰り返されるパターンの間隔です。
+**Rotation** 繰り返されるパターンの回転軸です。
+[[video:assets/text fill/videos/패턴]]
+</topic>
+<topic "Highlight">
+テキストに **Highlight** を追加できます。
+[[video:assets/text fill/videos/하이라이트]]
+**Edge Distance** テキストのエッジ部分からの距離を設定します。
+</topic>
+<topic "Line Highlight">
+**Highlight** と重ねて使用でき、**Edge Distance** 機能を除けば **Highlight** と同様に使用できます。
+[[video:assets/text fill/videos/라인 하이라이트]]
+</topic>
+<topic "Dynamic">
+テキストの動きに合わせて適用されたエフェクトも一緒に動くようにする設定です。
+**Highlight & Pattern** を中心に確認すると、**Dynamic** 機能が適用されている場合、
+テキストがアニメーションで動いてもエフェクトの結果が一定に維持されることが確認できます。
+[[video:assets/text fill/videos/다이나믹 2]]
+[[video:assets/text fill/videos/다이나믹]]
+</topic>
+<topic "Camera">
+After Effects の仕様上、カメラなどの動きで 3D 回転が入ると、エフェクト自体は回転しない現象が発生します。
+Gradient はカラーが滑らかに変化するため、この違いが大きく感じられない場合があります。一方 Pattern は規則的な形状を持っているため、テキストのサイズ変化による違いをより簡単に確認できます。
+これを補うため、エフェクト自体で 3D 機能をサポートしています。
+ただし、エフェクト自体の 3D 機能を使用する場合、テキストのサイズがコンポジションサイズを超えないように注意する必要があります。
+**エフェクト自体の 3D とレイヤーの 3D にはそれぞれメリット・デメリットがあります。** 推奨する方式はありません。実際に適用してみて、最適な方をご使用ください。
+[[video:assets/text fill/videos/카메라]]
+</topic>
+Order 描画される順番です。
+**G** Gradient
+**P** Pattern
+**H** Highlight
+**L** Line Highlight
+エフェクト内部に複数のレイヤーがあり、それらのレイヤーの順序と考えると理解しやすいです。
+レイヤーの順序を変更し、エフェクト内部の **Blending Mode** を活用して様々なスタイルで装飾してみてください。
+`,
+        faq: updateText.ja + ``
+    },
+
+    en: {
+        quick: `A text-exclusive plugin that allows you to **color text individually by glyph units**, even across separated strokes.
+Through the **Dynamic** feature that tracks text movement, the colored results follow seamlessly and remain consistent even when the text moves or is animated with animators.
+You can easily create stylized text effects by applying random colors to each stroke or selecting desired patterns.
+[[video:assets/text fill/videos/텍스트 꾸미기]]
+[[video:assets/text fill/videos/프로모션]]
+For detailed instructions, please refer to each parameter description.
+`,
+        params: commonParamsText.en + `
+**Color** A custom parameter for specifying colors.
+**Mode** Rules for selecting colors for each individual stroke.
+[[video:assets/text fill/videos/텍스트 칠]]
+<topic "3D Transform">
+A 3D transformation available when **Camera** is set to **AE Camera**.
+Controls Z-axis transformation. For detailed explanations, please check the **Camera** group.
+</topic>
+<topic "Opacity">
+Allows you to adjust alpha values using curve parameters.
+[[video:assets/text fill/videos/불투명도 조절]]
+</topic>
+<topic "Gradient"> **Gradient** applied to each stroke.
+Using **Opacity**, you can adjust the opacity at the end of the applied **Rotation** angle. The starting area appears transparent, with color gradually appearing toward the end.
+**Start Strength** controls the opacity strength at the start position.
+[[video:assets/text fill/videos/그라디언트]]
+</topic>
+<topic "Pattern">
+Select a **Shape** to create repeating patterns over text.
+**Shape - Feather** Feathering that fades out as it moves away from the center of the pattern **Shape**.
+**Spacing** The interval between repeating patterns.
+**Rotation** The rotation axis for repeating patterns.
+[[video:assets/text fill/videos/패턴]]
+</topic>
+<topic "Highlight">
+Adds a **Highlight** effect to the text.
+[[video:assets/text fill/videos/하이라이트]]
+**Edge Distance** Sets the distance from the edges of the text.
+</topic>
+<topic "Line Highlight">
+Can be layered with **Highlight**. Aside from the **Edge Distance** option, it functions identically to **Highlight**.
+[[video:assets/text fill/videos/라인 하이라이트]]
+</topic>
+<topic "Dynamic">
+A setting that links applied effects to text movement.
+Focusing on **Highlight & Pattern**, you can see that when **Dynamic** is enabled, the rendered effect stays consistent even while the text animates.
+[[video:assets/text fill/videos/다이나믹 2]]
+[[video:assets/text fill/videos/다이나믹]]
+</topic>
+<topic "Camera">
+Due to how After Effects works, 3D rotations driven by cameras or other layers will not automatically rotate the effect itself.
+Because Gradients transition smoothly, this difference might not be very noticeable. Patterns, on the other hand, have rigid geometric shapes, making size and rotation differences much easier to spot.
+To compensate, this effect provides built-in 3D functionality.
+However, when using the built-in 3D feature, make sure the text size does not exceed the composition dimensions.
+**Both built-in 3D and native 3D layers have their own pros and cons.** There is no single recommended method—try both and choose what works best for your workflow.
+[[video:assets/text fill/videos/카메라]]
+</topic>
+Order Specifies the render order.
+**G** Gradient
+**P** Pattern
+**H** Highlight
+**L** Line Highlight
+Think of these as multiple layers inside the effect, with this setting defining their layer stack order.
+Change the layer order and experiment with internal **Blending Modes** to achieve various visual styles.
+`,
+        faq: updateText.en + ``
+    }
+};
 
 
 
@@ -1526,7 +1732,8 @@ const pluginLogs = {
     "path-repeater": pathRepeaterLog,
     "boundary-fill": boundaryFillLog,
     "text-one": textOneLog,
-    "motion-path-stroke": MotionPathStrokeLog
+    "motion-path-stroke": motionPathStrokeLog,
+    "text-fill": textFillLog,
 };
 
 let toggleGroupCounter = 0;
