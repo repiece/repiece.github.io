@@ -1244,23 +1244,17 @@ Null 레이어를 지정하여 Position에 keyFrame 를 생성하는 걸로 스�
 <topic "Noize">
 **Noize**는 **Wave** 하고 다르게 3D에 스트로크 위치를 기반으로 무작위적인 노이즈로 스트로크를 휘게 합니다.
 </topic>
-<topic open "Camera">
-3D 기능을 사용하려면 **Camera Mode**를 **AE Camera**로 설정해야 합니다.
-카메라 레이어가 생성되어 있지 않으면 3D 공간이 정확하게 계산되지 안습니다, 카메라 레이어를 생성한 상태에서 사용해 주세요.
 <topic "Occlusion">
-**콜랩스(해 아이콘) 레이어 전용입니다.**
+**비 콜랩스(해 아이콘) 레이어 전용입니다.**
 레이어를 지정만 하면 Z축에 따라서 클리핑이 되게 설정되었습니다.
-간단한 방식을 위해서 정확도는 살짝 포기했습니다. 과도한 카메라 회전이나 지정한 레이어하고 너무 가까운 스트로크에서는 정확하지 않게 작동할 수 있습니다.
+간단한 방식을 위해서 콜랩스 레이어는 지원하지않습니다.
 **Occlusion** 기능을 사용하기위해서는 지정한 레이어가 효과를 적용한 단색레이어보다 밑에 있어야하며 카메라 레이어가 생성되어
 있어야합니다.
-[[video:assets/motion path stroke/videos/오클루젼 1]]
-Text Layer와 Shape Layer는 기본적으로 콜랩스 레이어이므로 레이어를 지정하는 것만으로 사용할 수 있습니다.
-Footage Layer는 아래와 같은 방법으로 콜랩스 레이어로 만들어 사용할 수 있습니다.
-1. Footage Layer를 프리컴포지션한 후, 프리컴포지션 내부의 레이어를 3D 레이어로 활성화합니다. (내부 레이어의 Z축 값은 변경하지 않고 0으로 유지합니다.)
-2. 프리컴포지션 레이어의 콜랩스 기능과 3D 기능을 활성화합니다.
-3. 프리컴포지션 레이어의 Z축 값을 조절하여 사용합니다.
-[[video:assets/motion path stroke/videos/오클루젼 2]]
+Text Layer와 Shape Layer는 기본적으로 콜랩스 레이어이므로 레이어를 프리컴포지션 해서 사용해주세요
 </topic>
+<topic "Camera">
+3D 기능을 사용하려면 **Camera Mode**를 **AE Camera**로 설정해야 합니다.
+카메라 레이어가 생성되어 있지 않으면 3D 공간이 정확하게 계산되지 안습니다, 카메라 레이어를 생성한 상태에서 사용해 주세요.
 </topic>
 </topic>
 <topic open "Path Controller">
@@ -1342,24 +1336,17 @@ Null レイヤーを指定し、Position にキーフレームを設定するだ
 <topic "Noise">
 **Noise** は **Wave** と異なり、3D 空間上のストローク位置を基準にランダムなノイズでストロークを変形します。
 </topic>
-<topic open "Camera">
+<topic "Occlusion">
+**非コラップス（太陽アイコン）レイヤー専用です。**
+レイヤーを指定するだけで、Z軸に応じてクリッピングされるように設定されています。
+シンプルな方式を採用しているため、コラップスレイヤーには対応していません。
+**Occlusion**機能を使用するには、指定したレイヤーがエフェクトを適用した平面レイヤーより下にあり、カメラレイヤーが作成されている必要があります。
+Text LayerとShape Layerはデフォルトでコラップスレイヤーになっているため、プリコンポーズして使用してください。
+</topic>
+<topic "Camera">
 3D 機能を使用するには **Camera Mode** を **AE Camera** に設定する必要があります。
 カメラレイヤーが存在しない場合、3D 空間の計算が正しく行われません。
 必ずカメラレイヤーを作成した状態で使用してください。
-<topic "Occlusion">
-**コラプス（太陽アイコン）レイヤー専用機能です。**
-レイヤーを指定するだけで、Z 軸に基づいたクリッピングが行われます。
-簡単な仕組みを優先しているため、精度は多少犠牲にしています。
-極端なカメラ回転や、指定レイヤーに非常に近いストロークでは正確に動作しない場合があります。
-**Occlusion** を使用するには、指定したレイヤーがエフェクトを適用したソリッドレイヤーより下に配置されており、カメラレイヤーが作成されている必要があります。
-[[video:assets/motion path stroke/videos/오클루젼 1]]
-Text Layer と Shape Layer は基本的にコラプス（連続ラスタライズ）レイヤーのため、レイヤーを指定するだけで使用できます。
-Footage Layer は以下の方法でコラプスレイヤー化して使用できます。
-1. Footage Layer をプリコンポーズし、プリコンポジション内のレイヤーを 3D レイヤーとして有効にします。（内部レイヤーの Z 値は変更せず 0 のままにしてください。）
-2. プリコンポジションレイヤーのコラプス（連続ラスタライズ）と 3D を有効にします。
-3. プリコンポジションレイヤーの Z 値を調整して使用します。
-[[video:assets/motion path stroke/videos/오클루젼 2]]
-</topic>
 </topic>
 </topic>
 <topic open "Path Controller">
@@ -1448,24 +1435,17 @@ Animate **Offset** to create motion.
 <topic "Noise">
 Unlike **Wave**, **Noise** bends the stroke using random noise based on its position in 3D space.
 </topic>
-<topic open "Camera">
+<topic "Occlusion">
+**For non-Collapsed (sun icon) layers only.**
+Simply specify a layer, and it will be clipped according to the Z-axis.
+For simplicity, Collapsed layers are not supported.
+To use the **Occlusion** feature, the specified layer must be below the solid layer with the effect applied, and a camera layer must be created.
+Text Layers and Shape Layers are Collapsed layers by default, so please pre-compose them before use.
+</topic>
+<topic "Camera">
 To use 3D features, **Camera Mode** must be set to **AE Camera**.
 If no camera layer exists, the 3D space cannot be calculated correctly.
 Please create a camera layer before using this mode.
-<topic "Occlusion">
-**Only supported on Collapse Transformation (Sun Icon) layers.**
-Simply assign a layer to enable Z-based clipping.
-To keep the setup simple, some accuracy has been sacrificed.
-Results may become inaccurate with extreme camera rotations or when strokes are very close to the assigned layer.
-To use **Occlusion**, the assigned layer must be placed below the Solid Layer that has the effect applied, and a Camera Layer must exist in the composition.
-[[video:assets/motion path stroke/videos/오클루젼 1]]
-Text Layers and Shape Layers are effectively Collapse Transformation layers by default, so they can be used simply by assigning the layer.
-Footage Layers can be converted into Collapse Transformation layers using the following workflow:
-1. Pre-compose the Footage Layer, then enable 3D for the layer inside the pre-composition. (Keep the internal layer's Z position at 0.)
-2. Enable both **Collapse Transformations** and **3D Layer** for the pre-composition layer.
-3. Adjust the Z position of the pre-composition layer as needed.
-[[video:assets/motion path stroke/videos/오클루젼 2]]
-</topic>
 </topic>
 </topic>
 <topic open "Path Controller">
